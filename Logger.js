@@ -1,4 +1,4 @@
-module.exports = class Logger {
+var Logger = class Logger {
 
     /**
      * Get the singleton object
@@ -101,4 +101,14 @@ module.exports = class Logger {
         console.log( Logger.indentation[Logger.level] + msg );
     }
 
+    /**
+     * log a message
+     * @param {String} msg
+     */
+    static logError (msg) {
+        console.log( Logger.indentation[Logger.level] + 'ERROR: ' + msg );
+    }
+
 };
+
+module.exports = Logger;

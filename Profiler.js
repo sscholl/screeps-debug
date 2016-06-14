@@ -1,6 +1,6 @@
 let Logger = require('Logger');
 
-module.exports = class Profiler {
+var Profiler = class Profiler {
 
     /**
      * Get the singleton object
@@ -89,13 +89,13 @@ module.exports = class Profiler {
         if (this.ACTIVE && Game.time % this.REPORT_INTERVALL === 0) {
             var sum = 0;
             for (var n in Memory.timer) {
-                var p = Memory.timer[n];
-                if (p.count === 0) {
-                    p.average = 0;
+                var timer = Memory.timer[n];
+                if (timer.count === 0) {
+                    timer.average = 0;
                     continue;
                 }
-                p.average = p.usage / p.count;
-                sum += p.average;
+                timer.average = timer.usage / timer.count;
+                sum += timer.average;
             }
             var msg;
             for (var n in Memory.timer) {
@@ -111,3 +111,7 @@ module.exports = class Profiler {
     }
 
 };
+
+module.exports = Profiler;
+
+Logger._.wrap('Profiler', Profiler, 'report');

@@ -3,8 +3,6 @@ let Logger = require('Logger');
 Profiler._.init();
 Logger._.init();
 
-Logger._.wrap('Profiler', Profiler, 'report');
-
 module.exports.loop = function () {
     if (Game.cpu.tickLimit < 500) {
         Logger.log("Execution of loop is not possible, because tick limit is " + Game.cpu.tickLimit + "<500");
@@ -25,7 +23,7 @@ module.exports.loop = function () {
         for (var i = 0; i < 2; ++i) room.findPath(spawn.pos.findClosestByPath(FIND_SOURCES).pos, spawn.pos);
     }
 
-    Profiler.report();
+    Profiler._.report();
 
     Logger.functionExit("MAIN TIME ", Game.cpu.getUsed() - time);
 };
