@@ -1,5 +1,4 @@
-Screeps Debugger, Logger and Profiler
-----
+#### Screeps Debugger, Logger and Profiler
 
 This is a debug module for screeps.com. You can test it with the main.js in a clean screeps.com-branch.
 
@@ -10,15 +9,13 @@ Use it in you project with:
 
 Contribute by adding code to support more classes. I plan to improve the module to add own methods to the profiler.
 
-Informations
-___
+##### Informations
 
 - CPU costs of report() is currently at 5.
 - CPU costs of initialization (method wrapping) is currently <1.
 - Activate it when measurements should be done with Debug.ACTIVE = true|false;
 
-Adjustments
-___
+##### Adjustments
 
 To only debug own defined methods add the following to Debug.constructor().
 
