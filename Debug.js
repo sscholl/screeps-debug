@@ -1,5 +1,11 @@
 module.exports =  class Debug {
-    
+   
+    /**
+     * Instantiate the Debug class and apply the wrapper functions to classes to measure timings
+     * 
+     * @constructor
+     * @this {Debug}
+     */ 
     constructor() {
         this.ACTIVE = true;
         this.MODULES = {
@@ -30,12 +36,19 @@ module.exports =  class Debug {
         }
     }
     
-    wrapTimer (className, c, functionName) {
-        var timer = Memory.timer[className + '.' + functionName] || { usage: 0, count: 0 };
-        Memory.timer[className + '.' + functionName] = timer;
+    /**
+     * wrap function of class c
+     * 
+     * @param {String} class name
+     * @param {Object} class object
+     * @param {String} method name
+     */
+    wrapTimer (className, c, method) {
+        var timer = Memory.timer[className + '.' + method] || { usage: 0, count: 0 };
+        Memory.timer[className + '.' + method] = timer;
     
-        var f = c.prototype[functionName];
-        c.prototype[functionName] = function() {
+        var f = c.prototype[method];
+        c.prototype[method] = function() {
             var startTime   = Game.cpu.getUsed();
             var returnValue = f.apply(this, arguments);
             timer.usage     += Game.cpu.getUsed() - startTime;
@@ -44,6 +57,9 @@ module.exports =  class Debug {
         };
     }
     
+    /**
+     * report the measured data to console and email
+     */
     report(){
         if (this.ACTIVE && Game.time % this.REPORT_INTERVALL === 0) {
             var summary = 0;
@@ -71,27 +87,3 @@ module.exports =  class Debug {
     }
     
 };
-
-/* Selected Timers
-    this.wrapTimer(Room, 'lookAt');
-    this.wrapTimer(Room, 'lookFor');
-    this.wrapTimer(Room, 'lookForAt');
-    this.wrapTimer(Room, 'lookForAtArea');
-    this.wrapTimer(Room, 'find');
-    this.wrapTimer(Room, 'findPath');
-    this.wrapTimer(RoomPosition, 'isNearTo');
-    this.wrapTimer(RoomPosition, 'findPathTo');
-    this.wrapTimer(RoomPosition, 'isEqualTo');
-    this.wrapTimer(RoomPosition, 'findClosestByPath');
-    this.wrapTimer(RoomPosition, 'findClosestByDistance');
-    this.wrapTimer(Creep, 'moveByPath');
-    this.wrapTimer(Creep, 'moveTo');
-    this.wrapTimer(Creep, 'movePredefined');
-    this.wrapTimer(Creep, 'pickup');
-    this.wrapTimer(Creep, 'build');
-    this.wrapTimer(Creep, 'repair');
-    this.wrapTimer(Creep, 'harvest');
-    this.wrapTimer(Creep, 'upgradeController');
-    this.wrapTimer(Spawn, 'createCreep');
-    this.wrapTimer(Spawn, 'spawn');
-*/
