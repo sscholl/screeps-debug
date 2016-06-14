@@ -1,13 +1,22 @@
-#### Screeps Debugger, Logger and Profiler
+#### Screeps Debugger: Logging and Profiling
 
-This is a debug module for screeps.com. You can test it with the main.js in a clean screeps.com-branch.
+This is a debug module for screeps.com. You can test it with the contained main.js in a clean screeps.com-branch or including it in the own branch.
 
 Use it in you project with:
- 1. let Debug = require('Debug');
- 2. var debug = new Debug();
- 3. debug.report();
+```javascript
+let Profiler = require('Profiler');
+Profiler._.init();
+let Logger = require('Logger');
+Logger._.init();
 
-Contribute by adding code to support more classes. I plan to improve the module to add own methods to the profiler.
+Profiler._.report();
+```
+
+Contribute by adding code to support more classes and function. You also can add own functions to the logger and profiler with:
+```javascript
+Profiler._.wrap('className', class, 'method');
+Logger._.wrap('className', class, 'method');
+```
 
 ##### Informations
 
@@ -17,28 +26,29 @@ Contribute by adding code to support more classes. I plan to improve the module 
 
 ##### Adjustments
 
-To only debug own defined methods add the following to Debug.constructor().
+To only debug own defined methods add the following to Profiler.init() - similar to Logger.
 
 ```javascript
-    this.wrapTimer(Room, 'lookAt');
-    this.wrapTimer(Room, 'lookFor');
-    this.wrapTimer(Room, 'lookForAt');
-    this.wrapTimer(Room, 'lookForAtArea');
-    this.wrapTimer(Room, 'find');
-    this.wrapTimer(Room, 'findPath');
-    this.wrapTimer(RoomPosition, 'isNearTo');
-    this.wrapTimer(RoomPosition, 'findPathTo');
-    this.wrapTimer(RoomPosition, 'isEqualTo');
-    this.wrapTimer(RoomPosition, 'findClosestByPath');
-    this.wrapTimer(RoomPosition, 'findClosestByDistance');
-    this.wrapTimer(Creep, 'moveByPath');
-    this.wrapTimer(Creep, 'moveTo');
-    this.wrapTimer(Creep, 'movePredefined');
-    this.wrapTimer(Creep, 'pickup');
-    this.wrapTimer(Creep, 'build');
-    this.wrapTimer(Creep, 'repair');
-    this.wrapTimer(Creep, 'harvest');
-    this.wrapTimer(Creep, 'upgradeController');
-    this.wrapTimer(Spawn, 'createCreep');
-    this.wrapTimer(Spawn, 'spawn');
-´´´
+    Logger._.wrap(Room, 'lookAt');
+    Profiler._.wrap(Room, 'lookAt');
+    Profiler._.wrap(Room, 'lookFor');
+    Profiler._.wrap(Room, 'lookForAt');
+    Profiler._.wrap(Room, 'lookForAtArea');
+    Profiler._.wrap(Room, 'find');
+    Profiler._.wrap(Room, 'findPath');
+    Profiler._.wrap(RoomPosition, 'isNearTo');
+    Profiler._.wrap(RoomPosition, 'findPathTo');
+    Profiler._.wrap(RoomPosition, 'isEqualTo');
+    Profiler._.wrap(RoomPosition, 'findClosestByPath');
+    Profiler._.wrap(RoomPosition, 'findClosestByDistance');
+    Profiler._.wrap(Creep, 'moveByPath');
+    Profiler._.wrap(Creep, 'moveTo');
+    Profiler._.wrap(Creep, 'movePredefined');
+    Profiler._.wrap(Creep, 'pickup');
+    Profiler._.wrap(Creep, 'build');
+    Profiler._.wrap(Creep, 'repair');
+    Profiler._.wrap(Creep, 'harvest');
+    Profiler._.wrap(Creep, 'upgradeController');
+    Profiler._.wrap(Spawn, 'createCreep');
+    Profiler._.wrap(Spawn, 'spawn');
+```
