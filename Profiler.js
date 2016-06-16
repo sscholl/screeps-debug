@@ -1,3 +1,5 @@
+"use strict";
+
 let Logger = require('Logger');
 
 var Profiler = class Profiler {
@@ -31,7 +33,7 @@ var Profiler = class Profiler {
             ROOM:           true,
             ROOMPOSITION:   true,
         };
-        this.REPORT_INTERVALL = 1000;
+        this.REPORT_INTERVALL = 100;
     }
 
     /**
@@ -67,7 +69,7 @@ var Profiler = class Profiler {
      */
     wrap (className, c, method) {
         if (this.ACTIVE) {
-            var timer = Memory.timer[className + '.' + method] || { usage: 0, count: 0 };
+            var timer = Memory.timer[className + '.' + method] || { usage: 0, count: 0 , average: null , percentage: null };
             Memory.timer[className + '.' + method] = timer;
 
             var f = c.prototype[method];

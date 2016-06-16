@@ -1,3 +1,5 @@
+"use strict";
+
 var Logger = class Logger {
 
     /**
@@ -26,8 +28,8 @@ var Logger = class Logger {
     constructor () {
         this.ACTIVE = true;
         this.MODULES = {
-            ROOM:           true,
-            ROOMPOSITION:   true,
+            ROOM:           false,
+            ROOMPOSITION:   false,
         };
         this.REPORT_INTERVALL = 1000;
         if (Logger.level === undefined) Logger.level = 0;
@@ -106,6 +108,14 @@ var Logger = class Logger {
      */
     static logError (msg) {
         console.log( Logger.indentation[Logger.level] + 'ERROR: ' + msg );
+    }
+
+    /**
+     * log a object
+     * @param {String} obj
+     */
+    static logDebug (obj) {
+        console.log( Logger.indentation[Logger.level] + 'DEBUG: ' + JSON.stringify(obj) );
     }
 
 };
