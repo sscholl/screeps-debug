@@ -2,6 +2,15 @@
 
 var Logger = class Logger {
 
+    static ACTIVE: true;
+    static MODULES: {
+        ROOM:           true,
+        ROOMPOSITION:   true,
+    };
+    static indentation: ["", "  ", "    ", "      ", "        ", "          ", "            ", "              ", "                ", "                ", "                  ", "                    ", "                      ", "                        ", "                          ", "                            ", "                              ", "                                ", "                                  ", "                                    ", "                                      ", "                                        "];
+
+    static level: 0;
+
     /**
      * Get the singleton object
      * @return {Logger}
@@ -26,14 +35,6 @@ var Logger = class Logger {
      * @this {Logger}
      */
     constructor () {
-        this.ACTIVE = true;
-        this.MODULES = {
-            ROOM:           false,
-            ROOMPOSITION:   false,
-        };
-        this.REPORT_INTERVALL = 1000;
-        if (Logger.level === undefined) Logger.level = 0;
-        Logger.indentation = ["", "  ", "    ", "      ", "        ", "          ", "            ", "              ", "                ", "                ", "                  ", "                    ", "                      ", "                        ", "                          ", "                            ", "                              ", "                                ", "                                  ", "                                    ", "                                      ", "                                        "];
     }
 
     /**
