@@ -4,14 +4,6 @@ let Logger = require('Logger');
 
 var Profiler = class Profiler {
 
-    static ACTIVE: true;
-    static MODULES: {
-        ROOM:           true,
-        ROOMPOSITION:   true,
-    };
-    static REPORT_INTERVALL: 1000;
-    static REPORT_EMAIL: true;
-
     /**
      * Get the singleton object
      * @return {Profiler}
@@ -38,25 +30,33 @@ var Profiler = class Profiler {
      * @this {Profiler}
      */
     constructor () {
+        Profiler.ACTIVE = true;
+        Profiler.MODULES = {
+            ROOM:          true,
+            ROOMPOSITION:   true,
+        };
+        Profiler.REPORT_INTERVALL = 1000;
+        Profiler.REPORT_EMAIL = true;
     }
 
     /**
      * Apply the wrapper functions to classes to measure timings
      */
     init () {
-        if (Profiler.ACTIVE) {
+        if (Profiler.ACTIVE && this._init !== true) {
+            this._init = true;
             Memory.timer = Memory.timer || {};
             var methods = [];
             if (Profiler.MODULES.ROOM) {
                 methods = Object.getOwnPropertyNames(Room.prototype).filter(function (p) {
-                    return typeof Room.prototype[p] === 'function' && p != 'constructor' && p != 'toString' && p != 'toJSON';
+                    return typeof Room.prototype[p] === 'function' && p !== 'constructor' && p !== 'toString' && p !== 'toJSON';
                 });
                 //console.log('adding methods: ' + JSON.stringify(methods));
                 for (var i in methods) this.wrap('Room', Room, methods[i]);
             }
             if (Profiler.MODULES.ROOMPOSITION) {
                 methods = Object.getOwnPropertyNames(RoomPosition.prototype).filter(function (p) {
-                    return typeof RoomPosition.prototype[p] === 'function' && p != 'constructor' && p != 'toString' && p != 'toJSON';
+                    return typeof RoomPosition.prototype[p] === 'function' && p !== 'constructor' && p !== 'toString' && p !== 'toJSON';
                 });
                 //console.log('adding methods: ' + JSON.stringify(methods));
                 for (var i in methods) this.wrap('RoomPosition', RoomPosition, methods[i]);
@@ -69,7 +69,7 @@ var Profiler = class Profiler {
      *
      */
     finalize () {
-        if (Profiler.ACTIVE && Game.time % Profiler.REPORT_INTERVALL === 0)
+        if (Profiler.ACTIVE && Game.time % Profiler.REPORT_INTERVALL === 0 && false)
             this.report();
     }
 
